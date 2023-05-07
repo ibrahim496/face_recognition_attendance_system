@@ -9,7 +9,7 @@ from functools import wraps
 import boto3
 import os
 import mysql.connector
-import cv2
+
 import uuid
 
 import base64
