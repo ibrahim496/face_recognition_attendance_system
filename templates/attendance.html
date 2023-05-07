@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/attendance.css') }}">
+{% endblock%}
+
+{% block body %}
+<!-- attendance.html -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+    <div class="flashes">
+    {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+    </div>
+{% endif %}
+{% endwith %}
+
+<h1>Attendance</h1>
+
+<form method="POST" enctype="multipart/form-data">
+    <label for="course_id">Select course:</label>
+    <select name="course_id" id="course_id" required>
+        {% for course in courses %}
+            <option value="{{ course[0] }}">{{ course[1] }}</option>
+        {% endfor %}
+    </select>
+    <br><br>
+
+    <video id="video" width="640" height="480" autoplay></video>
+    <canvas id="canvas" width="640" height="480"></canvas>
+    <br>
+    <button type="button" id="capture">Capture</button>
+    <br>
+    <input type="hidden" id="image_data" name="image_data">
+    <br>
+
+    <input type="submit" value="Submit">
+</form>
+
+<script>
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const context = canvas.getContext('2d');
+    const captureButton = document.getElementById('capture');
+    const imageDataInput = document.getElementById('image_data');
+
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function (stream) {
+                video.srcObject = stream;
+            })
+            .catch(function (err) {
+                console.log("An error occurred: " + err);
+            });
+    }
+
+    captureButton.addEventListener('click', function () {
+        context.drawImage(video, 0, 0, 640, 480);
+        imageDataInput.value = canvas.toDataURL('image/jpeg');
+    });
+
+    
+    document.querySelector('form').addEventListener('submit', function (event) {
+        event.preventDefault();
+        context.drawImage(video, 0, 0, 640, 480);
+        imageDataInput.value = canvas.toDataURL('image/jpeg');
+        console.log('Form submitted');
+        this.submit();
+    });
+
+
+</script>
+
+
+
+{% endblock %}

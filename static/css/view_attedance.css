@@ -1,0 +1,26 @@
+
+body {
+        font-family: Arial, sans-serif;
+        display: flex;
+            flex-direction: column;
+            justify-content: center;
+        
+            min-height: 100vh;
+            text-align: center;
+
+
+}
+h1{
+    left: 33%;
+    position: absolute;
+    left: 45%;
+        bottom: 55%;
+}
+
+header img{
+    position: fixed;
+    width: 30%;
+    left: 33%;
+ bottom: 70%;
+ height: 30%;
+}

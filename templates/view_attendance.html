@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Staff Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/view_attedance.css') }}">
+</head>
+<header><img src="{{ url_for('static', filename='css/north.png') }}" alt=" Image"></header>
+
+<table>
+    <thead>
+        <tr>
+            <th>Student ID</th>
+            <th>Course Name</th>
+            <th>Attendance Date</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for attendance_record in attendance_data %}
+            <tr>
+                <td>{{ attendance_record[0] }}</td>
+                <td>{{ attendance_record[1] }}</td>
+                <td>{{ attendance_record[2] }}</td>
+                <td>{{ attendance_record[3] }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<form method="GET">
+    <label for="course_filter">Course:</label>
+    <select id="course_filter" name="course_filter">
+        <option value="">All Courses</option>
+        {% for course in courses %}
+            <option value="{{ course[0] }}" {% if course_filter == course[0] %}selected{% endif %}>{{ course[1] }}</option>
+        {% endfor %}
+    </select>
+    
+   <label for="attended_at">Attended At:</label>
+    <input type="date" id="attended_at" name="attended_at" value="{{ attended_at|default('', true) }}">
+
+
+    <input type="submit" value="Filter">
+</form>

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock%}
+
+{% block body %}
+<h1>Login</h1>
+<form action="{{ url_for('login_post') }}" method="post"
+    enctype="multipart/form-data">
+    <label for="student_id">Student ID:</label>
+    <input type="text" id="student_id" name="student_id" required><br><br>
+    <label for="image">Image:</label>
+    <input type="file" id="image" name="image" accept="image/*" required><br><br>
+    <input type="submit" value="Login">
+
+    {% endblock%}

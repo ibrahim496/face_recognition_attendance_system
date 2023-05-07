@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock%}
+
+{% block body %}
+{% if message %}
+ 
+        <p>{{ message }}</p>
+    {% endif %}
+<form method="POST" enctype="multipart/form-data">
+    
+
+        <label for="student_first_name">student first name:</label>
+        <input type="text" id="student_first_name" name="student_first_name" required>
+        <br><br>
+         <label for="student_last_name">student last name:</label>
+        <input type="text" id="student_last_name" name="student_last_name" required>
+        <br><br>
+        <label for="student_id">student id:</label>
+        <input type="text" id="student_id" name="student_id" required>
+        <br><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br><br>
+
+        <video id="video" width="640" height="480" autoplay></video>
+        <canvas id="canvas" width="640" height="480"></canvas>
+        <br>
+        <button type="button" id="capture">Capture</button>
+        <br>
+        <input type="hidden" id="image_data" name="image_data">
+        <br>
+
+        <input type="submit" value="Register">
+    </form>
+
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d');
+        const captureButton = document.getElementById('capture');
+        const imageDataInput = document.getElementById('image_data');
+
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function (stream) {
+                    video.srcObject = stream;
+                })
+                .catch(function (err) {
+                    console.log("An error occurred: " + err);
+                });
+        }
+
+        captureButton.addEventListener('click', function () {
+            context.drawImage(video, 0, 0, 640, 480);
+            imageDataInput.value = canvas.toDataURL('image/jpeg');
+        });
+    </script>
+
+{% endblock%}

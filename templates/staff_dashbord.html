@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Staff Dashboard</title>
+     <link rel="stylesheet" href="{{ url_for('static', filename='css/staff_dashboard.css') }}">
+
+</head>
+<header>   <img src="{{ url_for('static', filename='css/north.png') }}" alt=" Image"></header>
+<body>
+
+
+    <h1>Welcome, {{ current_user.username }}!</h1>
+    
+   <a href="{{ url_for('register') }}">
+            <button>Register a new student</button>
+        </a>
+
+           <a href="{{ url_for('create_course') }}">
+            <button>create course attendance</button>
+        </a>
+
+   <a href="{{ url_for('view_attendance') }}">
+        <button>view  attendance</button>
+    </a>
+    <a href="{{ url_for('staff_logout') }}">Logout</a>
+</body>
+</html>
