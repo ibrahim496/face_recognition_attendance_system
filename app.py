@@ -1,6 +1,3 @@
-
-
-
 from flask import Flask, render_template, request, redirect, url_for, escape, flash,session
 
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
@@ -83,6 +80,8 @@ def create_collection():
     return collection_name
     student_faces = load_student_faces()
     recognized_student_id = recognize_and_record_attendance(temp_image_path, student_faces, app.config['COLLECTION_ID'])
+ 
+     
 
 
 
@@ -501,4 +500,4 @@ def staff_dashboard():
 if __name__ == "__main__":
     collection_id = create_collection()
     app.config['COLLECTION_ID'] = collection_id
-    app.run(debug=True,  host="0.0.0.0", port=5000)
+    app.run(debug=True,  host="0.0.0.0", port=5001)
