@@ -1,4 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, escape, flash,session
+from urllib.parse import urlparse
+
+
 
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
 from flask_login import current_user
@@ -9,7 +12,7 @@ from functools import wraps
 import boto3
 import os
 import mysql.connector
-
+from flask_mysqldb import MySQL
 import uuid
 
 import base64
@@ -40,15 +43,21 @@ def load_student_faces():
     return student_faces
 
 
+CLEARDB_DATABASE_URL = os.environ.get("CLEARDB_DATABASE_URL") or "mysql://bc1f2086d1e683:14d62815@us-cdbr-east-06.cleardb.net/heroku_7d8807a933391b5?reconnect=true"
+url = urlparse(CLEARDB_DATABASE_URL)
+
+app.config["MYSQL_HOST"] = url.hostname
+app.config["MYSQL_USER"] = url.username
+app.config["MYSQL_PASSWORD"] = url.password
+app.config["MYSQL_DB"] = url.path[1:]
+app.config["MYSQL_PORT"] = url.port or 3306
+
+mysql = MySQL(app)
+
 
 # Connect to the MySQL database
-db = mysql.connector.connect(
-    host='localhost',
-    user='root',
-    password='khalil4820',
-    database='sys',
-    auth_plugin='mysql_native_password'
-)
+db = mysql.connection
+
 
 app = Flask(__name__)
 app.secret_key = 'khalil4820'
